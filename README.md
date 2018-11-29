@@ -1,3 +1,7 @@
+git add *  
+git commit -m "Describe the commit"  
+git push origin master   
+
 # Header 1
 
 ## Header 2?
