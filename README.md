@@ -1,4 +1,6 @@
-# Dummy
+# Header 1
+
+## Header 2?
 
 Google "markdown syntax", grab the first link, paste the URL below
 
@@ -19,6 +21,13 @@ escape to stop inserting
 
 to get out, hit escape, then type colon :  
 either wq or quit!  
+
+A First Level Header
+====================
+
+A Second Level Header
+---------------------
+
 
 
 
