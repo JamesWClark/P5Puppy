@@ -32,11 +32,11 @@ function Food(x, y) {
     this.x = x;
     this.y = y;
     this.color = color(255, 0, 0);
+    this.foodSize = 50;
     
     this.display = function() {
-        var foodSize = 50;
         fill(this.color);
-        ellipse(this.x, this.y, foodSize, foodSize);
+        ellipse(this.x, this.y, this.foodSize, this.foodSize);
     }
 }
 
@@ -44,13 +44,24 @@ function Squirrel() {
     // instance variables
     var x = mouseX;
     var y = mouseY;
+    var diameter = 200;
 
     this.getDistance = function(other) {
         var dist = Math.sqrt(Math.pow(x - other.x, 2) + Math.pow(y - other.y, 2));
+        return dist;
     }
     
     this.eat = function() {
-        
+        console.log('try to eat');
+        for(var i = 0; i < numFood; i++) {
+            var food = feed[i];
+            var d = this.getDistance(food);
+            var r1 = food.foodSize / 2;
+            var r2 = diameter / 2;
+            if(r1 + r2 > d) {
+                console.log('hit');
+            }
+        }
     }
     
     this.display = function() {   
@@ -102,10 +113,11 @@ function Squirrel() {
         arc(x-20, y+80, 40, 70, 0, PI+QUARTER_PI, CHORD);
 
         // CLINTS ANIMAL
-
+        /*
+        // head
         noStroke();
         fill('brown');
-        ellipse(x*3, y, 200, 200);
+        ellipse(x + 380, y, diameter, diameter);
 
         noStroke();
         fill('brown');
@@ -137,5 +149,6 @@ function Squirrel() {
         noStroke();
         fill('#000000');
         triangle(500, 300, 550, 325, 600, 300);
+        */
     };
 }
