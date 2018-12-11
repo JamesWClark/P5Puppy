@@ -50,6 +50,8 @@ function Puppy() {
     var x = mouseX;
     var y = mouseY;
     var diameter = 200;
+    var ate = false;
+    
 
     this.getDistance = function (other) {
         var dist = Math.sqrt(Math.pow(x - other.x, 2) + Math.pow(y - other.y, 2));
@@ -57,12 +59,17 @@ function Puppy() {
     };
 
     this.eat = function () {
+        ate = true;
+        setTimeout(function() {
+            ate = false;
+        }, 2000);
         for (var i = feed.length - 1; i >= 0; i--) {
             var food = feed[i];
             var d = this.getDistance(food);
             var r1 = food.foodSize / 2;
             var r2 = diameter / 2;
             if (r1 + r2 > d) {
+                diameter = 200;
                 feed.splice(i, 1);
                 feed.push(new Food(random(width), random(height)));
             }
@@ -70,13 +77,16 @@ function Puppy() {
     };
 
     this.display = function () {
+        if(!ate) {
+            diameter--;
+        }
         x = mouseX;
         y = mouseY;
         noStroke();
 
         // face
         fill('#52C5DC');
-        ellipse(x, y, 200, 200);
+        ellipse(x, y, diameter, diameter);
 
         // nose
         fill('#EFB8D2');
