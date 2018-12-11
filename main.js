@@ -1,12 +1,13 @@
-var sq;
+var puppy;
 var feed = []; // an empty array
 var numFood = 10;
 
 var a = [1, 2, 3];
 
 function setup() {
+    rectMode(CENTER);
     createCanvas(1024, 768);
-    sq = new Squirrel();
+    puppy = new Puppy();
 
     // initializing 10 pieces of food
     for (var i = 0; i < numFood; i++) {
@@ -16,7 +17,7 @@ function setup() {
 
 function draw() {
     background(0, 255, 0);
-    sq.display();
+    puppy.display();
 
     // display all the food
     for (var i = 0; i < feed.length; i++) {
@@ -25,7 +26,7 @@ function draw() {
 }
 
 function mousePressed() {
-    sq.eat();
+    puppy.eat();
 }
 
 function Food(x, y) {
@@ -44,7 +45,7 @@ function Food(x, y) {
     }
 }
 
-function Squirrel() {
+function Puppy() {
     // private instance variables
     var x = mouseX;
     var y = mouseY;
@@ -72,31 +73,63 @@ function Squirrel() {
         x = mouseX;
         y = mouseY;
         noStroke();
+
+        // face
         fill('#52C5DC');
         ellipse(x, y, 200, 200);
+
+        // nose
         fill('#EFB8D2');
         ellipse(x, y + 30, 64, 64);
+
+        // mouth
+        if (mouseIsPressed) {
+            fill(0);
+            rect(x, y + 80, 50, 30);
+            fill(255);
+            for (var i = x - 25; i < x + 25; i += 20) {
+                triangle(i, y + 65, i + 5, y + 75, i + 10, y + 65);
+                triangle(i, y + 95, i + 5, y + 85, i + 10, y + 95);
+            }
+            fill('#EE3E36');
+            ellipse(x, y + 100, 20, 40);
+        } else {
+            fill('#EE3E36');
+            arc(x - 20, y + 80, 40, 70, 0, PI + QUARTER_PI, CHORD);
+        }
+        
+        var eyeSize = 64;        
+        if(mouseIsPressed) {
+            eyeSize = 74;
+        }
+        var iris = eyeSize - 24;
+
+        // eyes
         fill('#FFFFFF');
-        ellipse(x + 42, y - 26, 64, 64);
+        ellipse(x + 42, y - 26, eyeSize, eyeSize);
         fill('#7FC35E');
-        ellipse(x + 42, y - 26, 40, 40);
+        ellipse(x + 42, y - 26, iris, iris);
         fill('#FFFFFF');
-        ellipse(x - 42, y - 26, 64, 64);
+        ellipse(x - 42, y - 26, eyeSize, eyeSize);
         fill('#7FC35E');
-        ellipse(x - 42, y - 26, 40, 40);
+        ellipse(x - 42, y - 26, iris, iris);
+
+        // ears
         fill('#52C5DC');
         push();
-        translate(x - 100, y - 80);
+        translate(x - 100, y - 80); // left
         rotate(Math.PI / 4);
         ellipse(0, 0, 52, 92);
+        fill('#AEAAAF');
+        ellipse(0, 0, 32, 72);
         pop();
         fill('#52C5DC');
         push();
-        translate(x + 100, y - 80);
+        translate(x + 100, y - 80); // right
         rotate(-Math.PI / 4);
         ellipse(0, 0, 52, 92);
+        fill('#AEAAAF');
+        ellipse(0, 0, 32, 72);
         pop();
-        fill('#EE3E36');
-        arc(x - 20, y + 80, 40, 70, 0, PI + QUARTER_PI, CHORD);
     };
 }
