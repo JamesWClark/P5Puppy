@@ -59,22 +59,38 @@ function Puppy() {
     };
 
     this.eat = function () {
+        
+        for (var i = feed.length - 1; i >= 0; i--) {
+            var food = feed[i];
+            var distance = this.getDistance(food);
+            var collision = this.checkCollision(food, distance);
+            
+            if(collision) {
+                this.modifyFoodEnvironment(feed);
+                this.wellFed();
+            }
+        }
+    };
+
+    this.wellFed = function() {
+        diameter = 200;
         ate = true;
         setTimeout(function() {
             ate = false;
         }, 2000);
-        for (var i = feed.length - 1; i >= 0; i--) {
-            var food = feed[i];
-            var d = this.getDistance(food);
-            var r1 = food.foodSize / 2;
-            var r2 = diameter / 2;
-            if (r1 + r2 > d) {
-                diameter = 200;
-                feed.splice(i, 1);
-                feed.push(new Food(random(width), random(height)));
-            }
-        }
-    };
+
+    }
+    
+    this.modifyFoodEnvironment = function(feed, i) {
+        feed.splice(i, 1);
+        feed.push(new Food(random(width), random(height)));
+    }
+    
+    this.checkCollision = function(food, distance) {
+        var r1 = food.foodSize / 2;
+        var r2 = diameter / 2;
+        return r1 + r2 > distance;
+    }
 
     this.display = function () {
         if(!ate) {
