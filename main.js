@@ -66,7 +66,7 @@ function Puppy() {
             var collision = this.checkCollision(food, distance);
             
             if(collision) {
-                this.modifyFoodEnvironment(feed);
+                this.modifyFoodEnvironment(feed, i);
                 this.wellFed();
             }
         }
